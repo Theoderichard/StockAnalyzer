@@ -4,6 +4,8 @@ package stockanalyzer.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import stockanalyzer.ctrl.Controller;
 
@@ -13,7 +15,16 @@ public class UserInterface
 	private Controller ctrl = new Controller();
 
 	public void getDataFromCtrl1(){
-		ctrl.process("ABC");
+
+		ArrayList<String> names = new ArrayList<>();
+
+		try {
+			ctrl.process("ABC");
+		} catch (IOException e) {
+			System.out.println("Connection Problems... pls try again later");
+		}
+
+
 	}
 
 	public void getDataFromCtrl2(){
@@ -31,6 +42,7 @@ public class UserInterface
 	}
 
 
+
 	public void start() {
 		Menu<Runnable> menu = new Menu<>("User Interfacx");
 		menu.setTitel("Wählen Sie aus:");
@@ -44,7 +56,6 @@ public class UserInterface
 		while ((choice = menu.exec()) != null) {
 			 choice.run();
 		}
-		ctrl.closeConnection();
 		System.out.println("Program finished");
 	}
 
