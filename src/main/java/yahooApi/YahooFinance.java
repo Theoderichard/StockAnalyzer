@@ -18,7 +18,7 @@ public class YahooFinance {
 
     public static final String URL_YAHOO = "https://query1.finance.yahoo.com/v7/finance/quote?symbols=%s";
 
-    public String requestData(List<String> tickers) throws IOException {
+    public String requestData(List<String> tickers) throws IOException{
         //TODO improve Error Handling
         String symbols = String.join(",", tickers);
         String query = String.format(URL_YAHOO, symbols);
@@ -51,15 +51,7 @@ public class YahooFinance {
         return jo;
     }
 
-    public void fetchAssetName(Asset asset) throws IOException {
-        YahooFinance yahoo = new YahooFinance();
-        List<String> symbols = new ArrayList<>();
-        symbols.add(asset.getSymbol());
-        String jsonResponse = null;
-        jsonResponse = yahoo.requestData(symbols);
-        JsonObject jo = yahoo.convert(jsonResponse);
-        asset.setName(extractName(jo));
-    }
+
 
     private String extractName(JsonObject jo) {
         String returnName = "";

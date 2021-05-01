@@ -4,8 +4,10 @@ package stockanalyzer.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Scanner;
 
 import stockanalyzer.ctrl.Controller;
 
@@ -16,29 +18,64 @@ public class UserInterface
 
 	public void getDataFromCtrl1(){
 
-		ArrayList<String> names = new ArrayList<>();
-
 		try {
-			ctrl.process("ABC");
+			for (String s : ctrl.process("ABC")){
+				System.out.println(s);
+			}
+
 		} catch (IOException e) {
 			System.out.println("Connection Problems... pls try again later");
 		}
 
-
 	}
 
 	public void getDataFromCtrl2(){
+		try {
+			for (String s : ctrl.process("GME")){
+				System.out.println(s);
+			}
+
+		} catch (IOException e) {
+			System.out.println("Connection Problems... pls try again later");
+		}
 	}
 
 	public void getDataFromCtrl3(){
+		try {
+			for (String s : ctrl.process("GOOG")){
+				System.out.println(s);
+			}
+
+		} catch (IOException e) {
+			System.out.println("Connection Problems... pls try again later");
+		}
 
 	}
 	public void getDataFromCtrl4(){
+		try {
+			for (String s : ctrl.process("AAPL")){
+				System.out.println(s);
+			}
 
+		} catch (IOException e) {
+			System.out.println("Connection Problems... pls try again later");
+		}
 	}
 	
 	public void getDataForCustomInput() {
-		
+
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("pls enter Ticker");
+		String a = scanner.nextLine();
+
+		try {
+			for (String s : ctrl.process(a)){
+				System.out.println(s);
+			}
+
+		} catch (IOException e) {
+			System.out.println("Connection Problems... pls try again later");
+		}
 	}
 
 
@@ -46,11 +83,11 @@ public class UserInterface
 	public void start() {
 		Menu<Runnable> menu = new Menu<>("User Interfacx");
 		menu.setTitel("Wählen Sie aus:");
-		menu.insert("a", "Choice 1", this::getDataFromCtrl1);
-		menu.insert("b", "Choice 2", this::getDataFromCtrl2);
-		menu.insert("c", "Choice 3", this::getDataFromCtrl3);
-		menu.insert("d", "Choice User Imput:",this::getDataForCustomInput);
-		menu.insert("z", "Choice User Imput:",this::getDataFromCtrl4);
+		menu.insert("a", "ABC Data", this::getDataFromCtrl1);
+		menu.insert("b", "GME Data", this::getDataFromCtrl2);
+		menu.insert("c", "GOOG Data", this::getDataFromCtrl3);
+		menu.insert("d", "AAPL Data",this::getDataFromCtrl4);
+		menu.insert("z", "Choice User Imput:",this::getDataForCustomInput);
 		menu.insert("q", "Quit", null);
 		Runnable choice;
 		while ((choice = menu.exec()) != null) {
