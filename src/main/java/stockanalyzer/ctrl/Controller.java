@@ -1,6 +1,7 @@
 package stockanalyzer.ctrl;
 
 import org.w3c.dom.ls.LSOutput;
+import stockanalyzer.downlader.Downloader;
 import yahooApi.YahooFinance;
 import yahooApi.beans.QuoteResponse;
 import yahooApi.beans.YahooResponse;
@@ -92,6 +93,10 @@ public class Controller {
 					.mapToDouble(q->q.getClose().intValue())
 					.count();
 
+	}
+
+	public void downloadTickers(Downloader down, ArrayList<String> ticker){
+		down.process(ticker);
 	}
 
 }

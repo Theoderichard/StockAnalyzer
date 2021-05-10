@@ -10,6 +10,9 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 import stockanalyzer.ctrl.Controller;
+import stockanalyzer.downlader.Downloader;
+import stockanalyzer.downlader.ParallelDownloader;
+import stockanalyzer.downlader.SequentialDownloader;
 
 public class UserInterface 
 {
@@ -52,6 +55,7 @@ public class UserInterface
 
 	}
 	public void getDataFromCtrl4(){
+
 		try {
 			for (String s : ctrl.process("AAPL")){
 				System.out.println(s);
@@ -78,6 +82,62 @@ public class UserInterface
 		}
 	}
 
+	public void getDataForDownloadSeq(){
+		ArrayList<String> tickerList = new ArrayList<>();
+		tickerList.add("AAPL");
+		tickerList.add("GME");
+		tickerList.add("GOOG");
+		tickerList.add("ABC");
+		tickerList.add("TTD");
+		tickerList.add("DOGE-USD");
+		tickerList.add("BABA");
+		tickerList.add("QCOM");
+		tickerList.add("AMZN");
+		tickerList.add("MSFT");
+		tickerList.add("AZFL");
+		tickerList.add("DD");
+
+
+
+		SequentialDownloader seq = new SequentialDownloader();
+
+		long startTime = System.currentTimeMillis();
+		ctrl.downloadTickers(seq, tickerList);
+		long stopTime = System.currentTimeMillis();
+
+		System.out.println((stopTime - startTime) + " milli seconds");
+
+	}
+
+	public void getDataForDownloadPar(){
+
+		ArrayList<String> tickerList = new ArrayList<>();
+		tickerList.add("AAPL");
+		tickerList.add("GME");
+		tickerList.add("GOOG");
+		tickerList.add("ABC");
+		tickerList.add("TTD");
+		tickerList.add("DOGE-USD");
+		tickerList.add("BABA");
+		tickerList.add("QCOM");
+		tickerList.add("AMZN");
+		tickerList.add("MSFT");
+		tickerList.add("AZFL");
+		tickerList.add("DD");
+
+
+
+		ParallelDownloader seq = new ParallelDownloader();
+
+
+		long startTime = System.currentTimeMillis();
+		ctrl.downloadTickers(seq, tickerList);
+		long stopTime = System.currentTimeMillis();
+
+		System.out.println((stopTime - startTime) + " milli seconds");
+
+	}
+
 
 
 	public void start() {
@@ -88,6 +148,8 @@ public class UserInterface
 		menu.insert("c", "GOOG Data", this::getDataFromCtrl3);
 		menu.insert("d", "AAPL Data",this::getDataFromCtrl4);
 		menu.insert("z", "Choice User Imput:",this::getDataForCustomInput);
+		menu.insert("s", "Download Sequential",this::getDataForDownloadSeq);
+		menu.insert("p", "Download Parallel",this::getDataForDownloadPar);
 		menu.insert("q", "Quit", null);
 		Runnable choice;
 		while ((choice = menu.exec()) != null) {
